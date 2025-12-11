@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.flyaway.thunderrider'
-version = '1.0.0'
+version = '1.1.0'
 
 java {
     toolchain {
@@ -17,10 +17,14 @@ repositories {
         name = "papermc"
         url = "https://repo.papermc.io/repository/maven-public/"
     }
+    maven { url = "https://maven.enginehub.org/repo/" }
+    maven { url = 'https://repo.essentialsx.net/releases/' }
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT'
+    compileOnly "com.sk89q.worldguard:worldguard-bukkit:7.0.14"
+    compileOnly 'net.essentialsx:EssentialsX:2.21.2'
 }
 
 tasks.jar {

@@ -1,13 +1,15 @@
 package com.flyaway.thunderrider;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class CommandHandler implements CommandExecutor {
 
     private final ThunderRider plugin;
+    private final MiniMessage miniMessage = MiniMessage.miniMessage();
 
     public CommandHandler(ThunderRider plugin) {
         this.plugin = plugin;
@@ -16,7 +18,7 @@ public class CommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("thunderrider.admin")) {
-            sender.sendMessage(ChatColor.RED + "Недостаточно прав!");
+            sender.sendMessage(miniMessage.deserialize(Config.getMessage("no-permissions")));
             return true;
         }
 
@@ -28,19 +30,24 @@ public class CommandHandler implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "reload":
                 plugin.reloadPlugin();
-                sender.sendMessage(ChatColor.GREEN + "ThunderRider перезагружен!");
+                sender.sendMessage(miniMessage.deserialize(Config.getMessage("reloaded")));
                 break;
 
             case "start":
                 plugin.startTask();
-                sender.sendMessage(ChatColor.GREEN + "ThunderRider запущен!");
+                sender.sendMessage(miniMessage.deserialize(Config.getMessage("started")));
                 break;
 
             case "stop":
                 plugin.stopTask();
-                sender.sendMessage(ChatColor.YELLOW + "ThunderRider остановлен!");
+                sender.sendMessage(miniMessage.deserialize(Config.getMessage("stopped")));
                 break;
 
+            case "spawn":
+                if (sender instanceof Player player) {
+                    plugin.spawnEvent(player.getLocation(), player);
+                }
+                break;
             default:
                 sendHelp(sender);
                 break;
@@ -50,9 +57,6 @@ public class CommandHandler implements CommandExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage(ChatColor.GOLD + "=== ThunderRider Commands ===");
-        sender.sendMessage(ChatColor.YELLOW + "/thunderider reload" + ChatColor.WHITE + " - Перезагрузить конфиг");
-        sender.sendMessage(ChatColor.YELLOW + "/thunderider start" + ChatColor.WHITE + " - Запустить плагин");
-        sender.sendMessage(ChatColor.YELLOW + "/thunderider stop" + ChatColor.WHITE + " - Остановить плагин");
+        sender.sendMessage(miniMessage.deserialize(Config.getMessage("help")));
     }
 }

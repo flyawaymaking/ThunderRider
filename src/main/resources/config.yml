@@ -1,25 +1,54 @@
-# ThunderRider Configuration
+# ThunderRider конфиг
 
-# Интервал проверки в тиках (20 тиков = 1 секунда)
-check-interval: 200
+check-interval: 1000             # интервал проверки спавна (20 тиков = 1 секунда)
+chance: 1.0                      # шанс спавна в процентах (0.0 - 100.0)
+spawn-radius: 15                 # радиус поиска точки спавна вокруг игрока
+helpers: 3                       # сколько помощников призывать
+show-message: true               # показывать сообщение игроку при спавне
+existing-rider-check-radius: 50  # радиус в пределах которого не будут спавниться новые всадники, если уже заспавнен
+debug: false                     # вкл/выкл режим отладки (логи)
 
-# Шанс срабатывания в процентах для каждого игрока
-chance: 1.0
+hp-multiplier:
+  horse: 3.0       # множитель здоровья для лошади (по умолчанию 3.0)
+  rider: 3.0       # множитель здоровья для всадника (скелета)
+  skeleton: 1.5    # множитель здоровья для дополнительных скелетов
 
-# Радиус вокруг игрока для спавна (в блоках)
-spawn-radius: 15
+attack-multiplier:
+  rider: 1.5       # множитель атаки для всадника (скелета)
+  skeleton: 1.5    # множитель атаки для дополнительных скелетов
 
-# Количество дополнительных скелетов
-additional-skeletons: 2
+names:
+  horse: ""                    # если пусто — имя не показывается, имя лошади
+  rider: "<gold>Всадник бури"  # имя всадника
+  skeleton: ""                 # имя для дополнительных скелетов
 
-# Усилить скелетов (больше здоровья)
-buff-skeletons: true
+# Указывай Material по имени (например: CHAINMAIL_HELMET, IRON_SWORD, BOW)
+# Пустая строка = предмет не надевать
+equipment:
+  rider:
+    helmet: "CHAINMAIL_HELMET"
+    chestplate: ""     # пример: "CHAINMAIL_CHESTPLATE"
+    leggings: ""
+    boots: ""
+    weapon: "BOW"      # оружие в руках всадника
+  skeleton:
+    helmet: "CHAINMAIL_HELMET"
+    chestplate: ""     # пример: "IRON_CHESTPLATE"
+    leggings: ""
+    boots: ""
+    weapon: "IRON_SWORD"
 
-# Показывать сообщение игроку
-show-message: true
-
-# Радиус проверки существующих всадников (блоков)
-existing-rider-check-radius: 50
-
-# Режим отладки (логи в консоль)
-debug: false
+# Сообщения
+messages:
+  no-permissions: "<red>Недостаточно прав!"
+  reloaded: "<green>ThunderRider перезагружен!"
+  started: "<green>ThunderRider запущен!"
+  stopped: "<green>ThunderRider остановлен!"
+  help: |
+    <gold>=== ThunderRider Commands ===
+    <yellow>/thunderider reload <white>- Перезагрузить конфиг
+    <yellow>/thunderider start <white>- Запустить плагин
+    <yellow>/thunderider stop <white>- Остановить плагин
+  spawned: "<green>Вы призвали всадника бури"
+  no-spawned: "<red>Не удалось призвать всадника бури"
+  hunting: "<yellow>⚡ <red>На вас охотится <gold>Всадник Бури!"
