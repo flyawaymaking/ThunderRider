@@ -72,6 +72,7 @@ messages:
     <yellow>/thunderider reload <white>- Перезагрузить конфиг
     <yellow>/thunderider start <white>- Запустить плагин
     <yellow>/thunderider stop <white>- Остановить плагин
+    <yellow>/thunderider spawn <white>- призвать всадника бури
   spawned: "<green>Вы призвали всадника бури"
   no-spawned: "<red>Не удалось призвать всадника бури"
   hunting: "<yellow>⚡ <red>На вас охотится <gold>Всадник Бури!"

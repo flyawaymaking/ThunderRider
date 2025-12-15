@@ -4,9 +4,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-public class CommandHandler implements CommandExecutor {
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class CommandHandler implements CommandExecutor, TabCompleter {
 
     private final ThunderRider plugin;
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
@@ -28,32 +32,42 @@ public class CommandHandler implements CommandExecutor {
         }
 
         switch (args[0].toLowerCase()) {
-            case "reload":
+            case "reload" -> {
                 plugin.reloadPlugin();
                 sender.sendMessage(miniMessage.deserialize(Config.getMessage("reloaded")));
-                break;
-
-            case "start":
+            }
+            case "start" -> {
                 plugin.startTask();
                 sender.sendMessage(miniMessage.deserialize(Config.getMessage("started")));
-                break;
-
-            case "stop":
+            }
+            case "stop" -> {
                 plugin.stopTask();
                 sender.sendMessage(miniMessage.deserialize(Config.getMessage("stopped")));
-                break;
-
-            case "spawn":
+            }
+            case "spawn" -> {
                 if (sender instanceof Player player) {
                     plugin.spawnEvent(player.getLocation(), player);
                 }
-                break;
-            default:
-                sendHelp(sender);
-                break;
+            }
+            default -> sendHelp(sender);
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (!sender.hasPermission("thunderrider.admin")) {
+            return List.of();
+        }
+
+        if (args.length == 1) {
+            return List.of("reload", "start", "stop", "spawn").stream()
+                    .filter(s -> s.startsWith(args[0].toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        return List.of();
     }
 
     private void sendHelp(CommandSender sender) {

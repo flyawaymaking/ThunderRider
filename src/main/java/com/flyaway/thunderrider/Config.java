@@ -42,7 +42,7 @@ public class Config {
         checkInterval = config.getInt("check-interval", 1000); // тики (50 секунд)
         chance = config.getDouble("chance", 1.0); // шанс в процентах
         radius = config.getInt("spawn-radius", 15); // радиус в блоках
-        helpers = config.getInt("helpers", 2);
+        helpers = config.getInt("helpers", 3);
         showMessage = config.getBoolean("show-message", true);
         existingRiderCheckRadius = config.getInt("existing-rider-check-radius", 50);
         debug = config.getBoolean("debug", false);
