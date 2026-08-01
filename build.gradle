@@ -3,11 +3,11 @@ plugins {
 }
 
 group = 'com.flyaway.thunderrider'
-version = '1.1.1'
+version = '1.2.0'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -22,11 +22,24 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT'
-    compileOnly "com.sk89q.worldguard:worldguard-bukkit:7.0.14"
+    compileOnly 'io.papermc.paper:paper-api:26.2.build.84-stable'
+    compileOnly('com.sk89q.worldguard:worldguard-bukkit:7.0.18') {
+        exclude group: 'com.google.guava', module: 'guava'
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
     compileOnly 'net.essentialsx:EssentialsX:2.21.2'
 }
 
 tasks.jar {
     archiveBaseName.set("ThunderRider")
+}
+
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand(
+                version: project.version,
+                name: project.name,
+                group: project.group
+        )
+    }
 }

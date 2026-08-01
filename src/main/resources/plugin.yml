@@ -1,6 +1,6 @@
-name: ThunderRider
-version: 1.1.1
-main: com.flyaway.thunderrider.ThunderRider
+name: ${name}
+version: ${version}
+main: ${group}.${name}
 api-version: 1.21
 description: Spawns lightning and skeleton riders near players
 author: FlyAwayMaking
